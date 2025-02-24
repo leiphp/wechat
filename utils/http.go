@@ -102,19 +102,19 @@ func Get(path string, extends ...interface{}) ([]byte, error) {
 	uri, _ := ReduceUrl(fmt.Sprintf("%s%s", domain, path), params)
 	var responseByte []byte
 	response, err := http.Get(uri)
-	defer response.Body.Close()
 	if err != nil {
 		return responseByte, err
 	}
+	// 检查是否为空
+	if response == nil {
+		return nil, fmt.Errorf("empty response from server")
+	}
+
+	defer response.Body.Close()
 
 	responseByte, err = ioutil.ReadAll(response.Body)
 	if err != nil {
 		return responseByte, err
-	}
-
-	// 检查是否为空
-	if response == nil {
-		return nil, fmt.Errorf("empty response from server")
 	}
 
 	responseString := string(responseByte)
