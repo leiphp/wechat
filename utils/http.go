@@ -111,6 +111,12 @@ func Get(path string, extends ...interface{}) ([]byte, error) {
 	if err != nil {
 		return responseByte, err
 	}
+
+	// 检查是否为空
+	if response == nil {
+		return nil, fmt.Errorf("empty response from server")
+	}
+
 	responseString := string(responseByte)
 	if strings.Contains(response.Header.Get("Content-Type"), "application/json") && m != nil && checkTokenExpired(responseString, *m) {
 		return Get(path, extends...)
