@@ -1,6 +1,7 @@
 package miniapp
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/leiphp/wechat/miniapp/module"
@@ -15,7 +16,7 @@ type App struct {
 	Hook   utils.Hook
 }
 
-//New 新建wechat Hook 处理accesstoken的逻辑
+// New 新建wechat Hook 处理accesstoken的逻辑
 func New(appid, secret string, Hook ...utils.Hook) *App {
 	app := &App{
 		Appid:  appid,
@@ -49,7 +50,9 @@ func (a *App) init() {
 		"secret":     a.Secret,
 		"grant_type": "client_credential",
 	})
+	fmt.Println("response2222222:", response)
 	a.Token.Token = gjson.Get(string(response), "access_token").String()
+	fmt.Println("token2222222token:", a.Token.Token)
 	if a.Token.Token == "" {
 		panic("Wechat Package [" + a.Appid + "] : \n" + string(response))
 	}
@@ -60,12 +63,12 @@ func (a *App) init() {
 	a.Token.UpdateTime = int(time.Now().Unix())
 }
 
-//GetAccessTokenSafety 获取公开的accessToken
+// GetAccessTokenSafety 获取公开的accessToken
 func (a *App) GetAccessTokenSafety(reflush bool) string {
 	return a.GetAccessToken(reflush).Token
 }
 
-//GetAccessToken 获取accessToken 不建议暴露使用
+// GetAccessToken 获取accessToken 不建议暴露使用
 func (a *App) GetAccessToken(reflush ...bool) *utils.Token {
 	//hook
 	if a.Hook != nil {
@@ -97,7 +100,7 @@ func (a *App) GetAccessToken(reflush ...bool) *utils.Token {
 	}
 }
 
-//GetAccessTokenWithHook 获取accessToken 不建议暴露使用
+// GetAccessTokenWithHook 获取accessToken 不建议暴露使用
 func (a *App) GetAccessTokenWithHook(reflush ...bool) *utils.Token {
 	token := a.Hook()
 	if token == nil {
@@ -127,92 +130,92 @@ func (a *App) GetAccessTokenWithHook(reflush ...bool) *utils.Token {
 	}
 }
 
-//Auth 用户
+// Auth 用户
 func (a *App) Auth() *module.Auth {
 	return module.AuthEntity.Init(a)
 }
 
-//CustomerServiceMessage 客服消息
+// CustomerServiceMessage 客服消息
 func (a *App) CustomerServiceMessage() *module.CustomerServiceMessage {
 	return module.CustomerServiceMessageEntity.Init(a)
 }
 
-//UrlScheme scheme
+// UrlScheme scheme
 func (a *App) UrlScheme() *module.UrlScheme {
 	return module.UrlSchemeEntity.Init(a)
 }
 
-//UrlLink url link
+// UrlLink url link
 func (a *App) UrlLink() *module.UrlLink {
 	return module.UrlLinkEntity.Init(a)
 }
 
-//Wxacode 小程序码
+// Wxacode 小程序码
 func (a *App) Wxacode() *module.Wxacode {
 	return module.WxacodeEntity.Init(a)
 }
 
-//Soter 生物认证
+// Soter 生物认证
 func (a *App) Soter() *module.Soter {
 	return module.SoterEntity.Init(a)
 }
 
-//SubscribeMessage 订阅消息
+// SubscribeMessage 订阅消息
 func (a *App) SubscribeMessage() *module.SubscribeMessage {
 	return module.SubscribeMessageEntity.Init(a)
 }
 
-//Ocr ocr
+// Ocr ocr
 func (a *App) Ocr() *module.Ocr {
 	return module.OcrEntity.Init(a)
 }
 
-//Img 图像处理
+// Img 图像处理
 func (a *App) Img() *module.Img {
 	return module.ImgEntity.Init(a)
 }
 
-//DecodedData 解密数据
+// DecodedData 解密数据
 func (a *App) DecodedData() *module.DecodedData {
 	return module.DecodedDataEntity.Init(a)
 }
 
-//NearbyPoi 附近的小程序
+// NearbyPoi 附近的小程序
 func (a *App) NearbyPoi() *module.NearbyPoi {
 	return module.NearbyPoiEntity.Init(a)
 }
 
-//Operation 运维中心
+// Operation 运维中心
 func (a *App) Operation() *module.Operation {
 	return module.OperationEntity.Init(a)
 }
 
-//SafetyControlCapability 安全风控
+// SafetyControlCapability 安全风控
 func (a *App) SafetyControlCapability() *module.SafetyControlCapability {
 	return module.SafetyControlCapabilityEntity.Init(a)
 }
 
-//Search 小程序搜索
+// Search 小程序搜索
 func (a *App) Search() *module.Search {
 	return module.SearchEntity.Init(a)
 }
 
-//ServiceMarket 服务市场
+// ServiceMarket 服务市场
 func (a *App) ServiceMarket() *module.ServiceMarket {
 	return module.ServiceMarketEntity.Init(a)
 }
 
-//Cloudbase 云开发
+// Cloudbase 云开发
 func (a *App) Cloudbase() *module.Cloudbase {
 	return module.CloudbaseEntity.Init(a)
 }
 
-//DataAnalysis 数据分析
+// DataAnalysis 数据分析
 func (a *App) DataAnalysis() *module.DataAnalysis {
 	return module.DataAnalysisEntity.Init(a)
 }
 
-//PhoneNumber 手机号
+// PhoneNumber 手机号
 func (a *App) PhoneNumber() *module.PhoneNumber {
 	return module.PhoneNumberEntity.Init(a)
 }

@@ -99,9 +99,14 @@ func Get(path string, extends ...interface{}) ([]byte, error) {
 			m = &a
 		}
 	}
+	fmt.Println("domain:", domain)
+	fmt.Println("path:", path)
+	fmt.Println("params:", params)
 	uri, _ := ReduceUrl(fmt.Sprintf("%s%s", domain, path), params)
+	fmt.Println("uri:", uri)
 	var responseByte []byte
 	response, err := http.Get(uri)
+	fmt.Println("response:", response)
 	if err != nil {
 		return responseByte, err
 	}
