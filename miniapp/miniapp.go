@@ -1,7 +1,6 @@
 package miniapp
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/leiphp/wechat/miniapp/module"
@@ -53,9 +52,7 @@ func (a *App) init() {
 	if err != nil {
 		panic("Utils.Get Error:" + err.Error())
 	}
-	fmt.Println("response2222222:", response)
 	a.Token.Token = gjson.Get(string(response), "access_token").String()
-	fmt.Println("token2222222token:", a.Token.Token)
 	if a.Token.Token == "" {
 		panic("Wechat Package [" + a.Appid + "] : \n" + string(response))
 	}
