@@ -45,11 +45,14 @@ func (a *App) init() {
 			UpdateTime: 0,
 		}
 	}
-	response, _ := utils.Get("/cgi-bin/token", utils.Query{
+	response, err := utils.Get("/cgi-bin/token", utils.Query{
 		"appid":      a.Appid,
 		"secret":     a.Secret,
 		"grant_type": "client_credential",
 	})
+	if err != nil {
+		panic("Utils.Get Error:" + err.Error())
+	}
 	fmt.Println("response2222222:", response)
 	a.Token.Token = gjson.Get(string(response), "access_token").String()
 	fmt.Println("token2222222token:", a.Token.Token)

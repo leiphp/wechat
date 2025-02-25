@@ -106,7 +106,8 @@ func Get(path string, extends ...interface{}) ([]byte, error) {
 	fmt.Println("uri:", uri)
 	var responseByte []byte
 	response, err := http.Get(uri)
-	fmt.Println("response:", response)
+	fmt.Println("http get response:", response)
+	fmt.Println("http get err:", err)
 	if err != nil {
 		return responseByte, err
 	}
